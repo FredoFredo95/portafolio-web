@@ -2,87 +2,189 @@
 /**
  * admin/index.php
  * 
- * Panel de Administración (Dashboard).
- * 
- * Estructura base preparada para la fase de backend.
- * Por ahora muestra un layout de placeholder indicando que el
- * dashboard se implementará con el sistema de login y CRUD.
- * 
- * Funcionalidades previstas:
- * - Verificación de sesión PHP (protección de acceso)
- * - Resumen estadístico (proyectos, tecnologías, visitas)
- * - CRUD de biografía
- * - CRUD de habilidades
- * - CRUD de tecnologías
- * - CRUD de proyectos
- * - Gestión de mensajes de contacto
+ * Dashboard principal del panel de administracion.
+ * Muestra: bienvenida, estadisticas, proyectos recientes,
+ * acciones rapidas y estado del sistema.
  */
 
-// Incluir cabecera
-include '../includes/header.php';
+$active_page = 'dashboard';
 
-// Incluir navbar
-include '../includes/navbar.php';
+// Datos de ejemplo (estaticos - se reemplazaran con MySQL en fase backend)
+$stats = [
+    ['label' => 'Total Proyectos',    'value' => '12', 'icon' => 'bi-folder',       'color' => 'stat-icon-blue',   'change' => '+2 este mes'],
+    ['label' => 'Habilidades',        'value' => '8',  'icon' => 'bi-tools',        'color' => 'stat-icon-purple', 'change' => 'Actualizado'],
+    ['label' => 'Tecnologias',        'value' => '7',  'icon' => 'bi-cpu',          'color' => 'stat-icon-cyan',   'change' => 'Actualizado'],
+    ['label' => 'Mensajes Nuevos',    'value' => '3',  'icon' => 'bi-envelope',     'color' => 'stat-icon-green',  'change' => '+1 nuevo'],
+];
+
+$recent_projects = [
+    ['id' => 1, 'title' => 'Sistema de Inventario',   'tech' => 'PHP, MySQL, Bootstrap',  'status' => 'published', 'views' => 142],
+    ['id' => 2, 'title' => 'Portafolio Personal',      'tech' => 'PHP, JS, CSS',           'status' => 'published', 'views' => 89],
+    ['id' => 3, 'title' => 'Blog Tecnologico CMS',     'tech' => 'PHP, AJAX, MySQL',       'status' => 'draft',     'views' => 0],
+    ['id' => 4, 'title' => 'App de Encuestas',         'tech' => 'JS, PHP, Bootstrap',     'status' => 'published', 'views' => 67],
+];
+
+$quick_actions = [
+    ['label' => 'Agregar nuevo proyecto',   'icon' => 'bi-folder-plus',    'url' => 'proyectos.php'],
+    ['label' => 'Actualizar biografia',     'icon' => 'bi-person',         'url' => 'biografia.php'],
+    ['label' => 'Editar habilidades',       'icon' => 'bi-tools',          'url' => 'habilidades.php'],
+    ['label' => 'Actualizar tecnologias',   'icon' => 'bi-cpu',            'url' => 'tecnologias.php'],
+];
+
+$system_status = [
+    ['label' => 'Base de datos MySQL',  'status' => 'Conectada',       'ok' => true],
+    ['label' => 'Sesion activa',        'status' => 'Activa',          'ok' => true],
+    ['label' => 'Ultimo acceso',        'status' => 'Hoy 10:32 AM',    'ok' => true],
+    ['label' => 'Modo mantenimiento',   'status' => 'Desactivado',     'ok' => true],
+    ['label' => 'Version PHP',          'status' => '8.2.x',           'ok' => true],
+];
+
+include '../includes/admin-header.php';
+include '../includes/admin-sidebar.php';
 ?>
 
-<section class="min-vh-100 d-flex align-items-center justify-content-center pt-5" 
-         style="background-color: #f1f5f9;">
-    <div class="container text-center py-5" style="max-width: 600px;">
-        
-        <!-- Icono -->
-        <div class="d-inline-flex align-items-center justify-content-center rounded-4 mb-4"
-             style="width: 80px; height: 80px; background: linear-gradient(135deg, #06b6d4, #3b82f6);">
-            <i class="bi bi-shield-lock text-white" style="font-size: 2.2rem;"></i>
+<!-- Main area -->
+<main class="admin-main">
+    
+    <!-- Topbar -->
+    <header class="admin-topbar">
+        <button class="admin-sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">
+            <i class="bi bi-list"></i>
+        </button>
+        <div>
+            <h1 class="admin-topbar-title">Dashboard</h1>
+            <p class="admin-topbar-subtitle">Portafolio Profesional - Panel de Administracion</p>
         </div>
-
-        <!-- Título -->
-        <h2 style="color: #0d2137; font-weight: 600; margin-bottom: 0.75rem;">
-            Panel de Administraci&oacute;n
-        </h2>
-        <p style="color: #64748b; font-size: 0.9rem; line-height: 1.7; margin-bottom: 2rem;">
-            Esta secci&oacute;n est&aacute; preparada para el dashboard administrativo con CRUD.
-            <br>Se activar&aacute; en la fase de implementaci&oacute;n del backend.
-        </p>
-
-        <!-- Lista de funcionalidades previstas -->
-        <div class="card border-0 shadow-sm text-start mx-auto mb-4" 
-             style="border-color: #e2e8f0 !important; max-width: 450px;">
-            <div class="card-body p-4">
-                <h5 style="color: #0d2137; font-size: 0.9rem; font-weight: 600; margin-bottom: 1rem;">
-                    Funcionalidades planificadas:
-                </h5>
-                <ul class="list-unstyled mb-0">
-                    <?php 
-                    $features = [
-                        'Login con sesiones PHP',
-                        'Gestión de biografía',
-                        'CRUD de habilidades',
-                        'CRUD de tecnologías',
-                        'CRUD de proyectos',
-                        'Gestión de mensajes de contacto',
-                        'Estadísticas de visitas'
-                    ];
-                    foreach ($features as $feature):
-                    ?>
-                    <li class="d-flex align-items-center gap-2 mb-2" style="color: #374151; font-size: 0.85rem;">
-                        <i class="bi bi-check-circle" style="color: #22c55e; font-size: 0.85rem;"></i>
-                        <?php echo $feature; ?>
-                    </li>
-                    <?php endforeach; ?>
-                </ul>
+        <div class="admin-topbar-user">
+            <div class="admin-user-avatar">A</div>
+            <span class="admin-user-name d-none d-sm-inline">Alfredo</span>
+        </div>
+    </header>
+    
+    <!-- Content -->
+    <div class="admin-content">
+        
+        <!-- Welcome -->
+        <div class="admin-welcome">
+            <h2>Bienvenido, Alfredo</h2>
+            <p>Aqui puedes gestionar todo el contenido de tu portafolio web profesional.</p>
+        </div>
+        
+        <!-- Stat Cards -->
+        <div class="row g-4 mb-4">
+            <?php foreach ($stats as $stat): ?>
+            <div class="col-6 col-lg-3">
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon <?php echo $stat['color']; ?>">
+                        <i class="bi <?php echo $stat['icon']; ?>"></i>
+                    </div>
+                    <div class="admin-stat-value text-navy"><?php echo $stat['value']; ?></div>
+                    <div class="admin-stat-label"><?php echo $stat['label']; ?></div>
+                    <div class="admin-stat-change"><?php echo $stat['change']; ?></div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+        
+        <div class="row g-4">
+            
+            <!-- Proyectos Recientes -->
+            <div class="col-lg-8">
+                <div class="admin-table-wrapper">
+                    <div class="admin-section-header px-3 pt-3">
+                        <div>
+                            <h3 class="admin-section-title">Proyectos Recientes</h3>
+                        </div>
+                        <a href="proyectos.php" class="btn btn-sm btn-cyan">
+                            <i class="bi bi-plus-lg me-1"></i>Nuevo Proyecto
+                        </a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Proyecto</th>
+                                    <th>Tecnologias</th>
+                                    <th>Estado</th>
+                                    <th>Visitas</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($recent_projects as $project): 
+                                    $status_class = ($project['status'] === 'published') ? 'badge-published' : 'badge-draft';
+                                    $status_label = ($project['status'] === 'published') ? 'Publicado' : 'Borrador';
+                                ?>
+                                <tr>
+                                    <td class="cell-title"><?php echo $project['title']; ?></td>
+                                    <td class="cell-muted"><?php echo $project['tech']; ?></td>
+                                    <td>
+                                        <span class="badge-status <?php echo $status_class; ?>">
+                                            <?php echo $status_label; ?>
+                                        </span>
+                                    </td>
+                                    <td class="cell-muted"><?php echo $project['views']; ?></td>
+                                    <td>
+                                        <div class="d-flex gap-1">
+                                            <button class="btn-action btn-action-view" title="Ver">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <button class="btn-action btn-action-edit" title="Editar">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn-action btn-action-delete btn-confirm-delete" title="Eliminar">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidebar widgets -->
+            <div class="col-lg-4">
+                
+                <!-- Acciones Rapidas -->
+                <div class="admin-form-card p-3 mb-4">
+                    <h3 class="admin-section-title mb-3">Acciones Rapidas</h3>
+                    <div class="d-flex flex-column gap-2">
+                        <?php foreach ($quick_actions as $action): ?>
+                        <a href="<?php echo $action['url']; ?>" class="admin-action-btn">
+                            <i class="bi <?php echo $action['icon']; ?>"></i>
+                            <span><?php echo $action['label']; ?></span>
+                            <i class="bi bi-chevron-right arrow"></i>
+                        </a>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                
+                <!-- Estado del Sistema -->
+                <div class="admin-form-card p-3">
+                    <h3 class="admin-section-title mb-3">Estado del Sistema</h3>
+                    <div>
+                        <?php foreach ($system_status as $item): 
+                            $dot_class = $item['ok'] ? 'status-online' : 'status-offline';
+                        ?>
+                        <div class="admin-status-item">
+                            <span class="admin-status-label"><?php echo $item['label']; ?></span>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="admin-status-dot <?php echo $dot_class; ?>"></span>
+                                <span class="admin-status-value"><?php echo $item['status']; ?></span>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                
             </div>
         </div>
+        
+    </div><!-- /.admin-content -->
+    
+</main><!-- /.admin-main -->
 
-        <!-- Botón volver -->
-        <a href="../index.php" class="btn d-inline-flex align-items-center gap-2"
-           style="background-color: #06b6d4; color: white; font-size: 0.88rem; padding: 0.5rem 1.2rem;">
-            <i class="bi bi-arrow-left" style="font-size: 0.8rem;"></i>
-            Volver al Portafolio
-        </a>
-    </div>
-</section>
-
-<?php
-// Incluir footer
-include '../includes/footer.php';
-?>
+<?php include '../includes/admin-footer.php'; ?>

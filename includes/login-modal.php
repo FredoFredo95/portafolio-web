@@ -2,91 +2,48 @@
 /**
  * login-modal.php
  * 
- * Modal de inicio de sesión (Bootstrap Modal).
- * - Header oscuro con gradiente, logo/icono y título
- * - Cuerpo blanco con formulario de login
- * - Campos: email y contraseña con iconos
- * - Aviso de seguridad (zona segura)
- * - Botón de inicio de sesión
- * - Link de recuperar contraseña (decorativo por ahora)
+ * Modal de inicio de sesion.
+ * Header oscuro, formulario de login con email y password.
  */
 ?>
-<!-- Modal de Login -->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+<div class="modal fade modal-login" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
-        <div class="modal-content border-0 overflow-hidden">
-            
-            <!-- Header oscuro -->
-            <div class="modal-header-custom">
-                
-                <!-- Logo/icono -->
-                <div class="modal-icon-container">
-                    <i class="bi bi-code-square"></i>
+        <div class="modal-content">
+            <div class="modal-header modal-login-header flex-column text-center pb-4 position-relative">
+                <div class="d-flex justify-content-center mb-3">
+                    <div class="modal-login-logo">
+                        <i class="bi bi-code-square"></i>
+                    </div>
                 </div>
-
-                <h5 class="modal-title-custom" id="loginModalLabel">
-                    Panel de Administraci&oacute;n
-                </h5>
-                <p class="modal-subtitle">
-                    Alfredo San Juan &mdash; Acceso exclusivo
-                </p>
-
-                <!-- Botón cerrar -->
-                <button type="button" class="btn-close modal-close-btn" 
-                        data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title modal-login-title" id="loginModalLabel">Panel de Administracion</h5>
+                <p class="modal-login-subtitle mb-0">Alfredo San Juan &mdash; Acceso exclusivo</p>
+                <button type="button" class="btn-close modal-login-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-
-            <!-- Cuerpo del formulario -->
-            <div class="modal-body px-4 py-4" style="background-color: white;">
-                
-                <!-- Aviso de seguridad -->
-                <div class="modal-security-notice">
-                    <i class="bi bi-shield-check modal-security-icon"></i>
-                    <span class="modal-security-text">
-                        Zona segura &mdash; Solo administradores autorizados
-                    </span>
+            <div class="modal-body modal-login-body">
+                <div class="d-flex align-items-center gap-2 login-security mb-3">
+                    <i class="bi bi-shield-check"></i>
+                    <span>Zona segura &mdash; Solo administradores autorizados</span>
                 </div>
-
                 <form id="loginForm" action="" method="POST">
-                    <!-- Email -->
-                    <div class="modal-form-group">
-                        <label for="login-email" class="modal-form-label">
-                            Correo Electr&oacute;nico
-                        </label>
-                        <div class="position-relative">
-                            <i class="bi bi-envelope modal-form-icon"></i>
-                            <input type="email" class="form-control modal-form-input" id="login-email" name="email"
-                                   placeholder="admin@sanjuan.dev" required>
+                    <div class="mb-3">
+                        <label for="login-email" class="form-label login-label">Correo Electronico</label>
+                        <div class="login-input-icon">
+                            <i class="bi bi-envelope"></i>
+                            <input type="email" class="form-control" id="login-email" name="email" placeholder="admin@sanjuan.dev" required>
                         </div>
                     </div>
-
-                    <!-- Contraseña -->
-                    <div class="modal-form-group">
-                        <label for="login-password" class="modal-form-label">
-                            Contrase&ntilde;a
-                        </label>
-                        <div class="position-relative">
-                            <i class="bi bi-lock modal-form-icon"></i>
-                            <input type="password" class="form-control modal-form-input" id="login-password" name="password"
-                                   placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required>
+                    <div class="mb-2">
+                        <label for="login-password" class="form-label login-label">Contrasena</label>
+                        <div class="login-input-icon">
+                            <i class="bi bi-lock"></i>
+                            <input type="password" class="form-control" id="login-password" name="password" placeholder="........" required>
                         </div>
                     </div>
-
-                    <!-- Olvidé contraseña -->
-                    <div class="modal-forgot-password">
-                        <a href="#">
-                            &iquest;Olvidaste tu contrase&ntilde;a?
-                        </a>
+                    <div class="text-end mb-3">
+                        <a href="#" class="login-forgot">&iquest;Olvidaste tu contrasena?</a>
                     </div>
-
-                    <!-- Botón submit -->
-                    <button type="submit" class="btn modal-submit-btn">
-                        Iniciar Sesi&oacute;n
-                    </button>
-
-                    <p class="modal-info-notice">
-                        Solo para uso administrativo autorizado
-                    </p>
+                    <button type="submit" class="btn btn-navy w-100">Iniciar Sesion</button>
+                    <p class="text-center mt-3 mb-0 login-note">Solo para uso administrativo autorizado</p>
                 </form>
             </div>
         </div>

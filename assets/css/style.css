@@ -1,0 +1,1199 @@
+/**
+ * style.css
+ * 
+ * Estilos personalizados que complementan Bootstrap 5.3.
+ * Define la paleta de colores, componentes, animaciones y ajustes específicos
+ * para mantener fidelidad al diseño del portafolio.
+ * 
+ * Paleta de colores principal:
+ * - Fondo oscuro navbar/hero: #051525, #0d2137, #0a3060
+ * - Cyan primario (acento): #06b6d4
+ * - Fondo secciones claras: #f8fafc, #ffffff
+ * - Texto oscuro: #0d2137
+ * - Bordes sutiles: #e2e8f0
+ * - Texto gris: #64748b, #94a3b8
+ */
+
+/* ========================================
+   ESTILOS BASE
+   ======================================== */
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+}
+
+/* ========================================
+   NAVBAR
+   ======================================== */
+
+#mainNavbar {
+    background-color: #0d2137 !important;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.navbar-brand i {
+    color: #06b6d4;
+    font-size: 1.4rem;
+}
+
+.navbar-brand span {
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.navbar-nav .nav-link {
+    transition: color 0.25s ease;
+    padding: 0.4rem 0.7rem !important;
+    border-radius: 0.4rem;
+    font-size: 0.85rem;
+    color: #94a3b8 !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ffffff !important;
+}
+
+.navbar-nav .nav-link.active {
+    color: #ffffff !important;
+    background-color: rgba(6, 182, 212, 0.15);
+}
+
+.navbar-toggler {
+    border: none !important;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none !important;
+}
+
+.navbar-toggler i {
+    color: white;
+    font-size: 1.5rem;
+}
+
+/* Login button navbar */
+.navbar .btn-login {
+    background-color: #06b6d4 !important;
+    color: white !important;
+    font-size: 0.85rem;
+    padding: 0.4rem 1rem !important;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.navbar .btn-login:hover {
+    background-color: #0891b2 !important;
+}
+
+/* ========================================
+   HERO / BIOGRAFÍA
+   ======================================== */
+
+#biografia {
+    background: linear-gradient(135deg, #051525 0%, #0d2137 50%, #0a3060 100%);
+    min-height: 100vh;
+}
+
+.hero-badge {
+    background-color: rgba(6, 182, 212, 0.15);
+    color: #67e8f9;
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+    border-radius: 50px;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.hero-badge i {
+    font-size: 0.5rem;
+    color: #22c55e;
+    margin-right: 0.25rem;
+}
+
+.hero-name-main {
+    color: white;
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 0.25rem;
+}
+
+.hero-name-accent {
+    color: #06b6d4;
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+}
+
+.hero-title {
+    color: #93c5fd;
+    font-size: 1.15rem;
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+}
+
+.hero-location {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    justify-content: center;
+}
+
+.hero-location i {
+    color: #06b6d4;
+    font-size: 0.85rem;
+}
+
+.hero-location span {
+    color: #94a3b8;
+    font-size: 0.85rem;
+}
+
+.hero-description {
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    max-width: 500px;
+    margin: 1rem auto;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.hero-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    padding: 0.5rem 1.2rem !important;
+}
+
+.hero-btn-primary {
+    background-color: #06b6d4;
+    color: white !important;
+    text-decoration: none;
+}
+
+.hero-btn-primary:hover {
+    background-color: #0891b2;
+}
+
+.hero-btn-outline {
+    border-color: #93c5fd;
+    color: #93c5fd;
+    text-decoration: none;
+}
+
+.hero-btn-outline:hover {
+    background-color: #93c5fd;
+    color: white;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.hero-stat {
+    text-align: center;
+}
+
+.hero-stat-value {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.hero-stat-label {
+    color: #94a3b8;
+    font-size: 0.75rem;
+}
+
+/* Avatar section */
+.avatar-ring-outer {
+    width: 280px;
+    height: 280px;
+    background: linear-gradient(135deg, #06b6d4, #3b82f6);
+    padding: 4px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-ring-inner {
+    width: 100%;
+    height: 100%;
+    background-color: #0d2137;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-circle {
+    width: 220px;
+    height: 220px;
+    background: linear-gradient(135deg, #1e3a5f 0%, #0f2d55 100%);
+    border: 3px solid rgba(6, 182, 212, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-initials {
+    color: white;
+    font-size: 3.5rem;
+    font-weight: 700;
+    user-select: none;
+}
+
+.avatar-online-indicator {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    background-color: #06b6d4;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-online-dot {
+    width: 14px;
+    height: 14px;
+    background-color: #22c55e;
+    border-radius: 50%;
+}
+
+.avatar-badge-top {
+    position: absolute;
+    top: -10px;
+    right: -20px;
+    background-color: #06b6d4;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.5rem 0.75rem;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.avatar-badge-bottom {
+    position: absolute;
+    bottom: -10px;
+    left: -20px;
+    background-color: #1e3a5f;
+    color: #93c5fd;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.5rem 0.75rem;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.hero-scroll-arrow {
+    display: inline-block;
+    color: #64748b;
+    text-decoration: none;
+    animation: bounce 2s infinite;
+}
+
+.hero-scroll-arrow i {
+    font-size: 1.8rem;
+}
+
+/* ========================================
+   ANIMACIONES
+   ======================================== */
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* ========================================
+   SECCIONES GENERALES
+   ======================================== */
+
+section {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+}
+
+.section-label {
+    display: inline-block;
+    background-color: rgba(6, 182, 212, 0.1);
+    color: #0891b2;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    margin-bottom: 0.75rem;
+}
+
+.section-title {
+    color: #0d2137;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.section-description {
+    color: #64748b;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    max-width: 550px;
+    margin: 0.75rem auto;
+}
+
+.section-divider {
+    width: 50px;
+    height: 4px;
+    background-color: #06b6d4;
+    margin: 0.75rem auto;
+    border-radius: 2px;
+}
+
+/* ========================================
+   SKILLS - TARJETAS DE HABILIDADES
+   ======================================== */
+
+#habilidades {
+    background-color: #f8fafc;
+}
+
+.skill-card {
+    border: 1px solid !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    background-color: white !important;
+}
+
+.skill-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08) !important;
+}
+
+.skill-icon-container {
+    width: 48px;
+    height: 48px;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    border: 1px solid;
+}
+
+.skill-icon {
+    font-size: 1.4rem;
+}
+
+.skill-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.skill-description {
+    color: #64748b;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+/* ========================================
+   TECHNOLOGIES - BARRAS DE PROGRESO
+   ======================================== */
+
+#tecnologias {
+    background-color: #ffffff;
+}
+
+.tech-row {
+    margin-bottom: 1rem;
+}
+
+.tech-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.tech-name {
+    color: #0d2137;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.tech-badge {
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 50px;
+    border: 1px solid;
+}
+
+.tech-percentage {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.progress {
+    overflow: hidden;
+    height: 10px !important;
+    background-color: #f1f5f9 !important;
+    border-radius: 5px;
+}
+
+.progress-bar {
+    transition: width 0.7s ease;
+    border-radius: 5px;
+}
+
+.stats-card {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+.stats-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.25rem;
+}
+
+.stats-value {
+    color: #0d2137;
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.stats-label {
+    color: #64748b;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    margin-top: 0.25rem;
+}
+
+/* ========================================
+   PROJECTS - TARJETAS DE PROYECTOS
+   ======================================== */
+
+#proyectos {
+    background-color: #f8fafc;
+}
+
+.project-card {
+    border: 1px solid #e2e8f0 !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    background-color: white !important;
+}
+
+.project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.project-preview {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.project-featured-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    backdrop-filter: blur(4px);
+}
+
+.project-featured-badge i {
+    font-size: 0.6rem;
+}
+
+.project-preview-content {
+    text-align: center;
+}
+
+.project-emoji {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.project-preview-label {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.72rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 50px;
+    display: inline-block;
+}
+
+.project-title {
+    color: #0d2137;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.project-tag {
+    background-color: #eff6ff;
+    color: #1d4ed8;
+    font-size: 0.68rem;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    border-radius: 50px;
+    border: 1px solid #bfdbfe;
+}
+
+.project-description {
+    color: #64748b;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.project-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.project-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    font-size: 0.82rem;
+    padding: 0.5rem !important;
+}
+
+.project-btn-demo {
+    background-color: #0d2137;
+    color: white !important;
+    text-decoration: none;
+}
+
+.project-btn-demo:hover {
+    background-color: #1e3a5f;
+}
+
+.project-btn-github {
+    border: 1px solid #e2e8f0;
+    color: #374151;
+    text-decoration: none;
+}
+
+.project-btn-github:hover {
+    background-color: #f3f4f6;
+}
+
+.cta-all-projects {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid #06b6d4;
+    color: #0891b2;
+    font-size: 0.9rem;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    margin-top: 1.5rem;
+}
+
+.cta-all-projects:hover {
+    background-color: #06b6d4;
+    color: white;
+}
+
+/* ========================================
+   CONTACT SECTION
+   ======================================== */
+
+#contacto {
+    background-color: #ffffff;
+}
+
+.contact-info-title {
+    color: #0d2137;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.contact-icon-container {
+    width: 44px;
+    height: 44px;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    flex-shrink: 0;
+}
+
+.contact-icon-container i {
+    font-size: 1rem;
+}
+
+.contact-label {
+    color: #94a3b8;
+    font-size: 0.72rem;
+}
+
+.contact-value {
+    color: #0d2137;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+.contact-socials {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.social-link {
+    width: 36px;
+    height: 36px;
+    background-color: #0d2137;
+    color: white;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+}
+
+.social-link:hover {
+    background-color: #06b6d4;
+}
+
+.contact-availability {
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.availability-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #22c55e;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.availability-text {
+    color: #166534;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.availability-subtext {
+    color: #4ade80;
+    font-size: 0.7rem;
+}
+
+.contact-form-card {
+    background-color: white;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+    color: #0d2137;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+.form-control {
+    border-color: #e2e8f0 !important;
+    font-size: 0.88rem;
+    padding: 0.55rem 0.9rem;
+}
+
+.form-control:focus {
+    border-color: #06b6d4 !important;
+    box-shadow: 0 0 0 0.2rem rgba(6, 182, 212, 0.15) !important;
+}
+
+.form-submit-btn {
+    background-color: #0d2137 !important;
+    color: white !important;
+    font-size: 0.9rem;
+    padding: 0.6rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100% !important;
+}
+
+.form-submit-btn:hover {
+    background-color: #1e3a5f !important;
+}
+
+.form-notice {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 0.72rem;
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+}
+
+.contact-divider {
+    border-top: 1px solid #f1f5f9;
+    padding-top: 1rem;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+footer {
+    background-color: #051525;
+}
+
+footer a {
+    transition: color 0.2s ease;
+}
+
+.footer-divider {
+    border-bottom: 1px solid #0d2137;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.footer-brand i {
+    color: #06b6d4;
+    font-size: 1.3rem;
+}
+
+.footer-brand span {
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.footer-description {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    line-height: 1.8;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.footer-social-link {
+    width: 34px;
+    height: 34px;
+    background-color: #0d2137;
+    color: white;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: background-color 0.2s ease;
+}
+
+.footer-social-link:hover {
+    background-color: #06b6d4;
+}
+
+.footer-section-title {
+    color: white;
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.footer-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.nav-footer-link {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.nav-footer-link:hover {
+    color: #ffffff !important;
+}
+
+.footer-contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #94a3b8;
+    font-size: 0.85rem;
+    text-decoration: none;
+    margin-bottom: 1rem;
+    transition: color 0.2s ease;
+}
+
+.footer-contact-link:hover {
+    color: #06b6d4;
+}
+
+.footer-contact-icon {
+    color: #06b6d4;
+    font-size: 0.8rem;
+}
+
+.footer-stack-label {
+    color: #64748b;
+    font-size: 0.72rem;
+    margin-bottom: 0.5rem;
+}
+
+.footer-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+
+.footer-stack-badge {
+    background-color: #0d2137;
+    color: #94a3b8;
+    font-size: 0.68rem;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid #1e3a5f;
+    border-radius: 0.25rem;
+}
+
+.footer-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+@media (min-width: 576px) {
+    .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+.footer-copyright {
+    color: #64748b;
+    font-size: 0.78rem;
+}
+
+.footer-credit {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: #06b6d4;
+    font-size: 0.78rem;
+}
+
+.footer-credit i {
+    color: #ef4444;
+    font-size: 0.65rem;
+}
+
+/* ========================================
+   MODAL
+   ======================================== */
+
+.modal-content {
+    border-radius: 1rem !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header-custom {
+    background: linear-gradient(135deg, #051525 0%, #0d2137 100%);
+    padding: 2rem 1.5rem 1.5rem;
+    border: none !important;
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+}
+
+.modal-icon-container {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #06b6d4, #3b82f6);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.75rem;
+}
+
+.modal-icon-container i {
+    color: white;
+    font-size: 1.8rem;
+}
+
+.modal-title-custom {
+    color: white;
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.modal-subtitle {
+    color: #94a3b8;
+    font-size: 0.78rem;
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    filter: brightness(0) invert(1);
+    opacity: 0.6;
+}
+
+.modal-security-notice {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 0.75rem;
+    padding: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.modal-security-icon {
+    color: #16a34a;
+    font-size: 0.85rem;
+}
+
+.modal-security-text {
+    color: #166534;
+    font-size: 0.7rem;
+}
+
+.modal-form-group {
+    position: relative;
+    margin-bottom: 0.75rem;
+}
+
+.modal-form-label {
+    color: #0d2137;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.modal-form-input {
+    border-color: #e2e8f0 !important;
+    font-size: 0.88rem;
+    padding: 0.55rem 0.9rem 0.55rem 2.2rem !important;
+}
+
+.modal-form-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    font-size: 0.85rem;
+}
+
+.modal-form-input:focus {
+    border-color: #06b6d4 !important;
+    box-shadow: 0 0 0 0.2rem rgba(6, 182, 212, 0.15) !important;
+}
+
+.modal-forgot-password {
+    text-align: right;
+    margin-bottom: 0.75rem;
+}
+
+.modal-forgot-password a {
+    color: #06b6d4;
+    font-size: 0.78rem;
+    text-decoration: none;
+}
+
+.modal-forgot-password a:hover {
+    text-decoration: underline;
+}
+
+.modal-submit-btn {
+    background-color: #0d2137 !important;
+    color: white !important;
+    font-size: 0.9rem;
+    padding: 0.6rem !important;
+    width: 100% !important;
+}
+
+.modal-submit-btn:hover {
+    background-color: #1e3a5f !important;
+}
+
+.modal-info-notice {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 0.7rem;
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+}
+
+/* ========================================
+   SCROLLBAR PERSONALIZADA
+   ======================================== */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* ========================================
+   FADE-IN AL SCROLL
+   ======================================== */
+
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ========================================
+   RESPONSIVE ADJUSTMENTS
+   ======================================== */
+
+@media (max-width: 768px) {
+    section {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }
+
+    #biografia {
+        min-height: auto !important;
+        padding-top: 5rem !important;
+    }
+
+    .hero-name-main,
+    .hero-name-accent {
+        font-size: 2rem !important;
+    }
+
+    .hero-location {
+        justify-content: center;
+    }
+
+    .hero-description {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .stats-card {
+        text-align: center;
+    }
+
+    .project-buttons {
+        flex-direction: column;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+    }
+}

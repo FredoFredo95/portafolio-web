@@ -89,63 +89,47 @@ document.addEventListener('DOMContentLoaded', function () {
     // VALIDACIÓN FORMULARIO DE CONTACTO
     // ========================================
 
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function (e) {
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+        // Validación opcional, pero NO e.preventDefault()
+        const nombre = document.getElementById('contact-name').value.trim();
+        const email = document.getElementById('contact-email').value.trim();
+        const asunto = document.getElementById('contact-subject').value.trim();
+        const mensaje = document.getElementById('contact-message').value.trim();
+
+        if (!nombre || !email || !asunto || !mensaje) {
+            alert('Por favor, completa todos los campos.');
+            e.preventDefault(); // solo prevenimos si están vacíos
+            return;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert('Por favor, ingresa un correo electrónico válido.');
             e.preventDefault();
+            return;
+        }
+        // Si todo está bien, aparecera una alerta de mensaje enviado.
+            alert('¡Mensaje enviado! En breve nos pondremos en contacto.');
+    });
+}
+// ========================================
+// VALIDACIÓN FORMULARIO DE LOGIN
+// ========================================
 
-            const nombre = document.getElementById('contact-name').value.trim();
-            const email = document.getElementById('contact-email').value.trim();
-            const asunto = document.getElementById('contact-subject').value.trim();
-            const mensaje = document.getElementById('contact-message').value.trim();
+const loginForm = document.getElementById('loginForm');
+if (loginForm) {
+    loginForm.addEventListener('submit', function (e) {
+        const email = document.getElementById('login-email').value.trim();
+        const password = document.getElementById('login-password').value;
 
-            // Validación básica
-            if (!nombre || !email || !asunto || !mensaje) {
-                alert('Por favor, completa todos los campos del formulario.');
-                return;
-            }
-
-            // Validación de email simple
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert('Por favor, ingresa un correo electrónico válido.');
-                return;
-            }
-
-            // Éxito (por ahora solo frontend - sin backend aún)
-            alert('¡Mensaje enviado correctamente! (Simulación frontend)');
-            contactForm.reset();
-        });
-    }
-
-    // ========================================
-    // VALIDACIÓN FORMULARIO DE LOGIN
-    // ========================================
-
-    const loginForm = document.getElementById('loginForm');
-    if (loginForm) {
-        loginForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const email = document.getElementById('login-email').value.trim();
-            const password = document.getElementById('login-password').value;
-
-            if (!email || !password) {
-                alert('Por favor, completa todos los campos.');
-                return;
-            }
-
-            // Por ahora solo simulación - sin backend aún
-            alert('Login simulado. El backend se implementará en la siguiente fase.');
-            
-            // Cerrar modal
-            const modalEl = document.getElementById('loginModal');
-            const modal = bootstrap.Modal.getInstance(modalEl);
-            if (modal) {
-                modal.hide();
-            }
-        });
-    }
+        if (!email || !password) {
+            e.preventDefault();  // Solo evitar si hay campos vacíos
+            alert('Por favor, completa todos los campos.');
+            return;
+        }
+    });
+}
 
     // ========================================
     // NAVBAR: sombra más pronunciada al scroll

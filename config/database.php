@@ -22,26 +22,23 @@
  * - mensajes      (mensajes del formulario de contacto)
  */
 
-// Parámetros de conexión (comentados hasta activar backend)
-/*
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'portafolio_db');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_CHARSET', 'utf8mb4');
+// Parámetros de conexión
+// Definir constantes solo si no existen
 
-// Crear conexión con mysqli
-$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-// Verificar conexión
-if ($conn->connect_error) {
-    die('Error de conexión a la base de datos: ' . $conn->connect_error);
+if (!defined('DB_HOST'))     define('DB_HOST', 'localhost');
+if (!defined('DB_NAME'))     define('DB_NAME', 'portfolio_db');
+if (!defined('DB_USER'))     define('DB_USER', 'root');
+if (!defined('DB_PASS'))     define('DB_PASS', '');
+if (!defined('DB_CHARSET'))  define('DB_CHARSET', 'utf8mb4');
+
+// Crear conexión mysqli orientada a objetos y reutilizable
+if (!isset($mysqli) || !($mysqli instanceof mysqli)) {
+    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    if ($mysqli->connect_error) {
+        die('Error de conexión a la base de datos: ' . $mysqli->connect_error);
+    }
+    $mysqli->set_charset(DB_CHARSET);
 }
 
-// Establecer charset
-$conn->set_charset(DB_CHARSET);
-*/
-
-// Por ahora, variable de conexión nula
-$conn = null;
 ?>

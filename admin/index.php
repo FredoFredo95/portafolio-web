@@ -3,26 +3,36 @@
  * admin/index.php
  * 
  * Dashboard principal del panel de administracion.
- * Muestra: bienvenida, estadisticas, proyectos recientes,
- * acciones rapidas y estado del sistema.
+ * Muestra: estadisticas, proyectos recientes, acciones rapidas, estado del sistema.
+ * Datos dinámicos desde MySQL.
  */
+
+// Proteger ruta - verificar autenticación
+include '../includes/auth.php';
+
+require_once __DIR__ . '/../config/database.php';
+include '../handlers/projects.php';
+include '../handlers/messages.php';
 
 $active_page = 'dashboard';
 
-// Datos de ejemplo (estaticos - se reemplazaran con MySQL en fase backend)
+// Handlers
+$projectsHandler = new ProjectsHandler($mysqli);
+$messagesHandler = new MessagesHandler($mysqli);
+
+// Datos para las estadísticas
 $stats = [
-    ['label' => 'Total Proyectos',    'value' => '12', 'icon' => 'bi-folder',       'color' => 'stat-icon-blue',   'change' => '+2 este mes'],
+    ['label' => 'Total Proyectos',    'value' => count($projectsHandler->getAll()), 'icon' => 'bi-folder',       'color' => 'stat-icon-blue',   'change' => '+2 este mes'],
     ['label' => 'Habilidades',        'value' => '8',  'icon' => 'bi-tools',        'color' => 'stat-icon-purple', 'change' => 'Actualizado'],
     ['label' => 'Tecnologias',        'value' => '7',  'icon' => 'bi-cpu',          'color' => 'stat-icon-cyan',   'change' => 'Actualizado'],
-    ['label' => 'Mensajes Nuevos',    'value' => '3',  'icon' => 'bi-envelope',     'color' => 'stat-icon-green',  'change' => '+1 nuevo'],
+    ['label' => 'Mensajes Nuevos',    'value' => $messagesHandler->countNew(),  'icon' => 'bi-envelope',     'color' => 'stat-icon-green',  'change' => 'nuevos'],
 ];
 
-$recent_projects = [
-    ['id' => 1, 'title' => 'Sistema de Inventario',   'tech' => 'PHP, MySQL, Bootstrap',  'status' => 'published', 'views' => 142],
-    ['id' => 2, 'title' => 'Portafolio Personal',      'tech' => 'PHP, JS, CSS',           'status' => 'published', 'views' => 89],
-    ['id' => 3, 'title' => 'Blog Tecnologico CMS',     'tech' => 'PHP, AJAX, MySQL',       'status' => 'draft',     'views' => 0],
-    ['id' => 4, 'title' => 'App de Encuestas',         'tech' => 'JS, PHP, Bootstrap',     'status' => 'published', 'views' => 67],
-];
+// Proyectos recientes
+$recent_projects = $projectsHandler->getAll('published');
+if (count($recent_projects) > 4) {
+    $recent_projects = array_slice($recent_projects, 0, 4);
+}
 
 $quick_actions = [
     ['label' => 'Agregar nuevo proyecto',   'icon' => 'bi-folder-plus',    'url' => 'proyectos.php'],
@@ -34,9 +44,9 @@ $quick_actions = [
 $system_status = [
     ['label' => 'Base de datos MySQL',  'status' => 'Conectada',       'ok' => true],
     ['label' => 'Sesion activa',        'status' => 'Activa',          'ok' => true],
-    ['label' => 'Ultimo acceso',        'status' => 'Hoy 10:32 AM',    'ok' => true],
+    ['label' => 'Ultimo acceso',        'status' => date('d/m/Y H:i'), 'ok' => true],
     ['label' => 'Modo mantenimiento',   'status' => 'Desactivado',     'ok' => true],
-    ['label' => 'Version PHP',          'status' => '8.2.x',           'ok' => true],
+    ['label' => 'Version PHP',          'status' => phpversion(),           'ok' => true],
 ];
 
 include '../includes/admin-header.php';
@@ -56,8 +66,8 @@ include '../includes/admin-sidebar.php';
             <p class="admin-topbar-subtitle">Portafolio Profesional - Panel de Administracion</p>
         </div>
         <div class="admin-topbar-user">
-            <div class="admin-user-avatar">A</div>
-            <span class="admin-user-name d-none d-sm-inline">Alfredo</span>
+            <div class="admin-user-avatar"><?php echo substr($_SESSION['admin_nombre'], 0, 1); ?></div>
+            <span class="admin-user-name d-none d-sm-inline"><?php echo htmlspecialchars($_SESSION['admin_nombre']); ?></span>
         </div>
     </header>
     
@@ -66,7 +76,7 @@ include '../includes/admin-sidebar.php';
         
         <!-- Welcome -->
         <div class="admin-welcome">
-            <h2>Bienvenido, Alfredo</h2>
+            <h2>Bienvenido, <?php echo htmlspecialchars($_SESSION['admin_nombre']); ?></h2>
             <p>Aqui puedes gestionar todo el contenido de tu portafolio web profesional.</p>
         </div>
         
@@ -111,34 +121,38 @@ include '../includes/admin-sidebar.php';
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($recent_projects as $project): 
-                                    $status_class = ($project['status'] === 'published') ? 'badge-published' : 'badge-draft';
-                                    $status_label = ($project['status'] === 'published') ? 'Publicado' : 'Borrador';
+                                <?php if (!empty($recent_projects)): foreach ($recent_projects as $project): 
+                                    $status_class = ($project['estado'] === 'published') ? 'badge-published' : 'badge-draft';
+                                    $status_label = ($project['estado'] === 'published') ? 'Publicado' : 'Borrador';
                                 ?>
                                 <tr>
-                                    <td class="cell-title"><?php echo $project['title']; ?></td>
-                                    <td class="cell-muted"><?php echo $project['tech']; ?></td>
+                                    <td class="cell-title"><?php echo htmlspecialchars($project['titulo']); ?></td>
+                                    <td class="cell-muted"><?php echo htmlspecialchars($project['tecnologias']); ?></td>
                                     <td>
                                         <span class="badge-status <?php echo $status_class; ?>">
                                             <?php echo $status_label; ?>
                                         </span>
                                     </td>
-                                    <td class="cell-muted"><?php echo $project['views']; ?></td>
+                                    <td class="cell-muted"><?php echo $project['visitas']; ?></td>
                                     <td>
                                         <div class="d-flex gap-1">
-                                            <button class="btn-action btn-action-view" title="Ver">
+                                            <button class="btn-action btn-action-view" title="Ver" onclick="window.location.href='proyectos.php?view=<?php echo $project['id']; ?>'">
                                                 <i class="bi bi-eye"></i>
                                             </button>
-                                            <button class="btn-action btn-action-edit" title="Editar">
+                                            <button class="btn-action btn-action-edit" title="Editar" onclick="window.location.href='proyectos.php?edit=<?php echo $project['id']; ?>'">
                                                 <i class="bi bi-pencil"></i>
                                             </button>
-                                            <button class="btn-action btn-action-delete btn-confirm-delete" title="Eliminar">
+                                            <button class="btn-action btn-action-delete btn-confirm-delete" title="Eliminar" onclick="if(confirm('¿Eliminar este proyecto?')) window.location.href='proyectos.php?delete=<?php echo $project['id']; ?>'">
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
-                                <?php endforeach; ?>
+                                <?php endforeach; else: ?>
+                                <tr>
+                                    <td colspan="5" class="text-center py-3 text-muted">No hay proyectos disponibles. <a href="proyectos.php">Crear uno nuevo</a></td>
+                                </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
@@ -173,7 +187,7 @@ include '../includes/admin-sidebar.php';
                             <span class="admin-status-label"><?php echo $item['label']; ?></span>
                             <div class="d-flex align-items-center gap-2">
                                 <span class="admin-status-dot <?php echo $dot_class; ?>"></span>
-                                <span class="admin-status-value"><?php echo $item['status']; ?></span>
+                                <span class="admin-status-value"><?php echo htmlspecialchars($item['status']); ?></span>
                             </div>
                         </div>
                         <?php endforeach; ?>

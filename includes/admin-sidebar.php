@@ -53,7 +53,7 @@ $menu_items = [
     
     <!-- Footer sidebar: Logout -->
     <div class="admin-sidebar-footer">
-        <a href="../index.php" class="btn-logout">
+        <a href="../logout.php" class="btn-logout">
             <i class="bi bi-box-arrow-left"></i>
             <span>Cerrar Sesion</span>
         </a>

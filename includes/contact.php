@@ -4,14 +4,44 @@
  * 
  * Seccion de Contacto.
  * Dos columnas: info de contacto + formulario.
+ * Guarda mensajes en MySQL.
  */
+
+require_once __DIR__ . '/../config/database.php';
+include 'handlers/messages.php';
+
+$success_message = '';
+$error_message = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $messagesHandler = new MessagesHandler($mysqli);
+    
+    $data = [
+        'nombre' => trim($_POST['nombre'] ?? ''),
+        'email' => trim($_POST['email'] ?? ''),
+        'asunto' => trim($_POST['asunto'] ?? ''),
+        'mensaje' => trim($_POST['mensaje'] ?? '')
+    ];
+    
+    if (empty($data['nombre']) || empty($data['email']) || empty($data['asunto']) || empty($data['mensaje'])) {
+        $error_message = 'Por favor, completa todos los campos.';
+    } elseif (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+        $error_message = 'Por favor, ingresa un email válido.';
+    } else {
+        if ($messagesHandler->create($data)) {
+            $success_message = '¡Mensaje enviado! Te responderé pronto.';
+        } else {
+            $error_message = 'Error al enviar el mensaje. Intenta de nuevo.';
+        }
+    }
+}
 ?>
 <section id="contacto" class="py-5 bg-white">
     <div class="container py-4 max-w-6xl">
         <div class="section-header">
             <span class="section-tag">CONTACTO</span>
-            <h2 class="section-title">&iquest;Hablamos?</h2>
-            <p class="section-desc">&iquest;Tienes un proyecto en mente? Estoy disponible para freelance, practicas o colaboraciones. Escribeme.</p>
+            <h2 class="section-title">¿Hablamos?</h2>
+            <p class="section-desc">¿Tienes un proyecto en mente? Estoy disponible para freelance, practicas o colaboraciones. Escribeme.</p>
             <div class="section-line"></div>
         </div>
         <div class="row g-5 max-w-5xl mx-auto">
@@ -50,7 +80,21 @@
             <div class="col-lg-8">
                 <div class="card border-0 shadow-sm contact-card">
                     <div class="card-body p-4 p-md-5">
-                        <form id="contactForm" action="" method="POST">
+                        <?php if ($success_message): ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="bi bi-check-circle me-2"></i><?php echo htmlspecialchars($success_message); ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                        <?php endif; ?>
+                        
+                        <?php if ($error_message): ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="bi bi-exclamation-circle me-2"></i><?php echo htmlspecialchars($error_message); ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                        <?php endif; ?>
+                        
+                        <form id="contactForm" method="POST" action="">
                             <div class="row g-3 mb-3">
                                 <div class="col-md-6">
                                     <label for="contact-name" class="form-label contact-form-label">Nombre completo</label>
@@ -67,7 +111,7 @@
                             </div>
                             <div class="mb-4">
                                 <label for="contact-message" class="form-label contact-form-label">Mensaje</label>
-                                <textarea class="form-control" id="contact-message" name="mensaje" rows="5" placeholder="Escribe tu mensaje aqui. Cuéntame sobre tu proyecto, idea o consulta..." required class="no-resize"></textarea>
+                                <textarea class="form-control" id="contact-message" name="mensaje" rows="5" placeholder="Escribe tu mensaje aqui. Cuéntame sobre tu proyecto, idea o consulta..." required></textarea>
                             </div>
                             <button type="submit" class="btn btn-navy w-100 d-flex align-items-center justify-content-center gap-2">
                                 <i class="bi bi-send fs-8"></i>Enviar Mensaje

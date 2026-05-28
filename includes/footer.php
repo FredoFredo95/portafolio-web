@@ -47,7 +47,7 @@
             </div>
         </div>
         <div class="footer-divider d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
-            <span class="footer-copyright">&copy; 2026 Alfredo San Juan &mdash; Todos los derechos reservados</span>
+            <span class="footer-copyright">© 2026 Alfredo San Juan — Todos los derechos reservados</span>
             <span class="footer-credit d-flex align-items-center gap-1">
                 Portafolio Profesional <i class="bi bi-heart-fill"></i>
             </span>

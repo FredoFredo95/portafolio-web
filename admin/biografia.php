@@ -2,24 +2,45 @@
 /**
  * admin/biografia.php
  * 
- * Edicion de la informacion biografica y de perfil.
- * Formulario completo con datos personales, descripcion y redes sociales.
+ * Edicion de la informacion biografica y de perfil desde MySQL.
  */
+
+// Proteger ruta - verificar autenticación
+include '../includes/auth.php';
+
+require_once __DIR__ . '/../config/database.php';
+include '../handlers/biography.php';
 
 $active_page = 'biografia';
 
-// Datos de ejemplo (estaticos)
-$bio = [
-    'nombre'          => 'Alfredo San Juan',
-    'titulo'          => 'Estudiante Tecnico en Informatica',
-    'descripcion'     => 'Apasionado por el desarrollo web moderno, con experiencia en PHP, MySQL, JavaScript y Bootstrap. Comprometido con crear soluciones digitales limpias, funcionales y de alto impacto profesional.',
-    'email'           => 'alfredo@sanjuan.dev',
-    'ubicacion'       => 'Chile',
-    'telefono'        => '+569 XXXX XXXX',
-    'github'          => 'github.com/alfredosanjuan',
-    'linkedin'        => 'linkedin.com/in/alfredosanjuan',
-    'disponible'      => true,
-];
+$bioHandler = new BiographyHandler($mysqli);
+$bio = $bioHandler->get();
+
+// Procesar actualización
+$success_message = '';
+$error_message = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $data = [
+        'nombre' => trim($_POST['nombre'] ?? ''),
+        'apellido' => trim($_POST['apellido'] ?? ''),
+        'titulo' => trim($_POST['titulo'] ?? ''),
+        'descripcion' => trim($_POST['descripcion'] ?? ''),
+        'ubicacion' => trim($_POST['ubicacion'] ?? ''),
+        'disponible' => isset($_POST['disponible']) ? (int)$_POST['disponible'] : 0,
+    ];
+    
+    if (empty($data['nombre']) || empty($data['descripcion'])) {
+        $error_message = 'El nombre y descripción son requeridos.';
+    } else {
+        if ($bioHandler->update($data)) {
+            $success_message = 'Biografía actualizada correctamente.';
+            $bio = $bioHandler->get();
+        } else {
+            $error_message = 'Error al actualizar la biografía.';
+        }
+    }
+}
 
 include '../includes/admin-header.php';
 include '../includes/admin-sidebar.php';
@@ -36,12 +57,26 @@ include '../includes/admin-sidebar.php';
             <p class="admin-topbar-subtitle">Edita tu informacion personal y de perfil</p>
         </div>
         <div class="admin-topbar-user">
-            <div class="admin-user-avatar">A</div>
-            <span class="admin-user-name d-none d-sm-inline">Alfredo</span>
+            <div class="admin-user-avatar"><?php echo substr($_SESSION['admin_nombre'], 0, 1); ?></div>
+            <span class="admin-user-name d-none d-sm-inline"><?php echo htmlspecialchars($_SESSION['admin_nombre']); ?></span>
         </div>
     </header>
     
     <div class="admin-content">
+        
+        <?php if ($success_message): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-2"></i><?php echo htmlspecialchars($success_message); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <?php endif; ?>
+        
+        <?php if ($error_message): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-circle me-2"></i><?php echo htmlspecialchars($error_message); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <?php endif; ?>
         
         <!-- Datos actuales -->
         <div class="admin-form-card p-4 mb-4">
@@ -49,14 +84,12 @@ include '../includes/admin-sidebar.php';
                 <h3 class="admin-section-title">Informacion Actual</h3>
             </div>
             <div class="row g-3">
-                <div class="col-md-6"><span class="text-gray-500 fs-7">Nombre completo</span><p class="mb-0 text-navy"><?php echo $bio['nombre']; ?></p></div>
-                <div class="col-md-6"><span class="text-gray-500 fs-7">Titulo profesional</span><p class="mb-0 text-navy"><?php echo $bio['titulo']; ?></p></div>
-                <div class="col-12"><span class="text-gray-500 fs-7">Descripcion</span><p class="mb-0 text-navy"><?php echo $bio['descripcion']; ?></p></div>
-                <div class="col-md-4"><span class="text-gray-500 fs-7">Email</span><p class="mb-0 text-navy"><?php echo $bio['email']; ?></p></div>
-                <div class="col-md-4"><span class="text-gray-500 fs-7">Ubicacion</span><p class="mb-0 text-navy"><?php echo $bio['ubicacion']; ?></p></div>
-                <div class="col-md-4"><span class="text-gray-500 fs-7">Telefono</span><p class="mb-0 text-navy"><?php echo $bio['telefono']; ?></p></div>
-                <div class="col-md-6"><span class="text-gray-500 fs-7">GitHub</span><p class="mb-0 text-navy"><?php echo $bio['github']; ?></p></div>
-                <div class="col-md-6"><span class="text-gray-500 fs-7">LinkedIn</span><p class="mb-0 text-navy"><?php echo $bio['linkedin']; ?></p></div>
+                <div class="col-md-6"><span class="text-gray-500 fs-7">Nombre</span><p class="mb-0 text-navy"><?php echo htmlspecialchars($bio['nombre']); ?></p></div>
+                <div class="col-md-6"><span class="text-gray-500 fs-7">Apellido</span><p class="mb-0 text-navy"><?php echo htmlspecialchars($bio['apellido']); ?></p></div>
+                <div class="col-md-6"><span class="text-gray-500 fs-7">Titulo profesional</span><p class="mb-0 text-navy"><?php echo htmlspecialchars($bio['titulo']); ?></p></div>
+                <div class="col-md-6"><span class="text-gray-500 fs-7">Ubicacion</span><p class="mb-0 text-navy"><?php echo htmlspecialchars($bio['ubicacion']); ?></p></div>
+                <div class="col-12"><span class="text-gray-500 fs-7">Descripcion</span><p class="mb-0 text-navy"><?php echo htmlspecialchars($bio['descripcion']); ?></p></div>
+                <div class="col-md-6"><span class="text-gray-500 fs-7">Disponibilidad</span><p class="mb-0 text-navy"><?php echo $bio['disponible'] ? '✓ Disponible' : '✗ No disponible'; ?></p></div>
             </div>
         </div>
         
@@ -66,28 +99,24 @@ include '../includes/admin-sidebar.php';
             <form method="POST" action="">
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <label class="form-label admin-form-label">Nombre completo</label>
-                        <input type="text" class="form-control admin-form-control" name="nombre" value="<?php echo $bio['nombre']; ?>" required>
+                        <label class="form-label admin-form-label">Nombre</label>
+                        <input type="text" class="form-control admin-form-control" name="nombre" value="<?php echo htmlspecialchars($bio['nombre']); ?>" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label admin-form-label">Apellido</label>
+                        <input type="text" class="form-control admin-form-control" name="apellido" value="<?php echo htmlspecialchars($bio['apellido']); ?>" required>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label admin-form-label">Titulo profesional</label>
-                        <input type="text" class="form-control admin-form-control" name="titulo" value="<?php echo $bio['titulo']; ?>" required>
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label admin-form-label">Descripcion personal</label>
-                        <textarea class="form-control admin-form-control" name="descripcion" rows="4" required><?php echo $bio['descripcion']; ?></textarea>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label admin-form-label">Email de contacto</label>
-                        <input type="email" class="form-control admin-form-control" name="email" value="<?php echo $bio['email']; ?>">
+                        <input type="text" class="form-control admin-form-control" name="titulo" value="<?php echo htmlspecialchars($bio['titulo']); ?>" required>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label admin-form-label">Ubicacion</label>
-                        <input type="text" class="form-control admin-form-control" name="ubicacion" value="<?php echo $bio['ubicacion']; ?>">
+                        <input type="text" class="form-control admin-form-control" name="ubicacion" value="<?php echo htmlspecialchars($bio['ubicacion']); ?>">
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label admin-form-label">Telefono</label>
-                        <input type="tel" class="form-control admin-form-control" name="telefono" value="<?php echo $bio['telefono']; ?>">
+                    <div class="col-12">
+                        <label class="form-label admin-form-label">Descripcion personal</label>
+                        <textarea class="form-control admin-form-control" name="descripcion" rows="4" required><?php echo htmlspecialchars($bio['descripcion']); ?></textarea>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label admin-form-label">Disponibilidad</label>
@@ -95,14 +124,6 @@ include '../includes/admin-sidebar.php';
                             <option value="1" <?php echo $bio['disponible'] ? 'selected' : ''; ?>>Disponible para proyectos</option>
                             <option value="0" <?php echo !$bio['disponible'] ? 'selected' : ''; ?>>No disponible</option>
                         </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label admin-form-label">GitHub</label>
-                        <input type="text" class="form-control admin-form-control" name="github" value="<?php echo $bio['github']; ?>">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label admin-form-label">LinkedIn</label>
-                        <input type="text" class="form-control admin-form-control" name="linkedin" value="<?php echo $bio['linkedin']; ?>">
                     </div>
                     <div class="col-12 pt-2">
                         <button type="submit" class="btn btn-navy px-4">
